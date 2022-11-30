@@ -4,6 +4,15 @@ import GoalInput from './components/GoalInput';
 import GoalItem from './components/GoalItem';
 export default function App() {
   const [listGoals, setListGoals] = useState([]);
+  const [visibleModal, setVisibleModal] = useState(false);
+
+  function startAddGoalHandler () {
+    setVisibleModal(true);
+  };
+
+  function endAddGoalHandler () {
+    setVisibleModal(false);
+  };
 
   function addGoalHandler (enteredText) {
     if(enteredText){
@@ -11,6 +20,7 @@ export default function App() {
     } else{
       alert("Empty goal!")
     }
+    setVisibleModal(false);
   };
 
   function deleteItemHandler (id) {
@@ -21,7 +31,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <GoalInput onAddGoal={addGoalHandler}/>
+      <Button title="Add New Goal" onPress={startAddGoalHandler}/>
+      <GoalInput onAddGoal={addGoalHandler} visible={visibleModal} onCancel={endAddGoalHandler}/>
       <View style={styles.goalsContainer}>
         {/*<ScrollView alwaysBounceVertical={false}> 
           {
